@@ -1,0 +1,13 @@
+package com.udxp;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class UngDungXemPhimApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(UngDungXemPhimApplication.class, args);
+    }
+
+}
