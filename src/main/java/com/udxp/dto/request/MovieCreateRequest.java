@@ -1,9 +1,8 @@
 package com.udxp.dto.request;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-
-import java.time.LocalDate;
 
 @Data
 @NoArgsConstructor
@@ -11,8 +10,9 @@ import java.time.LocalDate;
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class MovieCreateRequest {
+    @NotBlank(message = "Tên phim không được để trống")
     String title;
     String description;
-    LocalDate releaseDate;
+    Integer releaseDate;
     int duration;
 }

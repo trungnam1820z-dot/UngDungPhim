@@ -3,7 +3,6 @@ package com.udxp.dto.response;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @Data
@@ -14,7 +13,7 @@ import java.util.List;
 public class MovieResponse {
     String title;
     String description;
-    LocalDate releaseDate;
+    Integer releaseDate;
     int duration;
     List<String> directorName;
     List<String> categoryName;

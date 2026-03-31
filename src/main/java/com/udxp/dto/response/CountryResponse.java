@@ -12,5 +12,4 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class CountryResponse {
     List<MovieResponse> movies;
-    List<String> directorName;
 }

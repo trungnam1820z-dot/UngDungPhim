@@ -21,7 +21,7 @@ public class Movie {
     int id;
     String title;
     String description;
-    LocalDate releaseDate;
+    Integer releaseDate;
     int duration;
     //Many movie - 1 country
     @ManyToOne
