@@ -9,6 +9,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CountryRepository extends JpaRepository<Country, Integer> {
     Page<CountryNameOnly> findAllBy(Pageable pageable);
-
+    boolean existsByCountryName(String countryName);
     void deleteByCountryName(String countryName);
 }

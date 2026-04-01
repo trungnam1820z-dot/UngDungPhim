@@ -4,6 +4,8 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -15,4 +17,7 @@ public class MovieCreateRequest {
     String description;
     Integer releaseDate;
     int duration;
+    int countryId;
+    List<Integer> directorIds;
+    List<Integer> categoryIds;
 }

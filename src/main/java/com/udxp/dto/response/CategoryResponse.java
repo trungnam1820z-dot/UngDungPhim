@@ -12,7 +12,8 @@ import java.util.List;
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class CategoryResponse {
+    int id;
     String categoryName;
     String description;
-    List<Movie> movies;
+    List<MovieResponse> movies;
 }

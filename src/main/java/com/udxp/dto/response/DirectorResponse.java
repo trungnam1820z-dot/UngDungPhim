@@ -1,6 +1,5 @@
 package com.udxp.dto.response;
 
-import com.udxp.entities.Movie;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -12,7 +11,7 @@ import java.util.List;
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class DirectorResponse {
-    String DirectorName;
+    String directorName;
     String countryName;
-    List<Movie> movies;
+    List<MovieResponse> movies;
 }

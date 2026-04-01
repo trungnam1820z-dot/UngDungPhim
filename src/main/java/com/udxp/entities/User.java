@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.time.LocalDate;
+
 @Entity
 @Table(name = "user")
 @Getter
@@ -21,5 +23,6 @@ public class User {
     String fullName;
     String Email;
     String Gender;
+    LocalDate createAt;
     String role;
 }

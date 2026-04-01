@@ -19,7 +19,7 @@ public class MovieController {
     // search, find, create, post, update, update 1 phần, delete
 
     @GetMapping("/movies")
-    public Page<MovieResponse> searchMovie(MovieFilter filter, @PageableDefault(size = 5) Pageable pageable) {
+    public Page<MovieResponse> searchMovie(@ModelAttribute MovieFilter filter, @PageableDefault(size = 5) Pageable pageable) {
         return movieService.searchMovie(filter,pageable);
     }
 

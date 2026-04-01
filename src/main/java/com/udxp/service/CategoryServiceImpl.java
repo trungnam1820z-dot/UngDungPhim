@@ -1,0 +1,57 @@
+package com.udxp.service;
+
+import com.udxp.dto.request.CategoryCreateRequest;
+import com.udxp.dto.response.CategoryResponse;
+import com.udxp.entities.Category;
+import com.udxp.mapper.CategoryMapper;
+import com.udxp.repository.CategoryNameOnly;
+import com.udxp.repository.CategoryRepository;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
+
+@Service
+@RequiredArgsConstructor
+@Log4j2
+public class CategoryServiceImpl implements CategoryService {
+
+    private final CategoryRepository categoryRepository;
+    private final CategoryMapper categoryMapper;
+    @Override
+    public CategoryResponse createCategory(CategoryCreateRequest request) {
+        if(categoryRepository.existsByCategoryName(request.getCategoryName())){
+            log.error("Category already exists");
+            throw new RuntimeException("Category already exists");
+        }
+        Category category = categoryMapper.toCategoryEntity(request);
+        return categoryMapper.toCategoryResponse(categoryRepository.save(category));
+    }
+
+    @Override
+    public CategoryResponse updateCategory(int id, CategoryCreateRequest request) {
+        Category category = categoryRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Category not found"));
+        categoryMapper.updateCategory(category, request);
+        return categoryMapper.toCategoryResponse(categoryRepository.save(category));
+    }
+
+    @Override
+    public void deleteCategory(String categoryName) {
+        categoryRepository.deleteAll();
+    }
+
+    @Override
+    public Page<String> getCategoryNames(Pageable pageable) {
+        Pageable sortedPageable = PageRequest.of(
+                pageable.getPageNumber(),
+                pageable.getPageSize(),
+                Sort.by("countryName").ascending()
+        );
+        return categoryRepository.findAllBy(sortedPageable)
+                .map(CategoryNameOnly::getCategoryName);
+    }
+}

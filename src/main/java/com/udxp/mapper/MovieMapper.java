@@ -19,7 +19,7 @@ public interface MovieMapper {
     Movie toMovie(MovieCreateRequest request);
 
     // entity -> response
-    @Mapping(target = "countryName", source = "country.countryName")
+    @Mapping( source = "country.countryName" ,target = "countryName")
     @Mapping(target = "directorName", source = "directors")
     @Mapping(target = "categoryName", source = "categories")
     MovieResponse toResponse(Movie movie);

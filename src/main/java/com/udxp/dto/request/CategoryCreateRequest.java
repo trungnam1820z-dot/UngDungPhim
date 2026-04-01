@@ -1,9 +1,8 @@
 package com.udxp.dto.request;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-
-import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -11,6 +10,7 @@ import java.util.List;
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class CategoryCreateRequest {
+    @NotBlank(message = "Tên thể loại không được để trống")
     String categoryName;
     String description;
 }

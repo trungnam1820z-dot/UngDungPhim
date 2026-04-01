@@ -8,7 +8,7 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class MovieFilter {
     String title;
-    String releaseDate;
+    Integer releaseDate;
     String directorName;
     String categoryName;
     String countryName;
