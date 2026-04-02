@@ -8,6 +8,8 @@ import com.udxp.repository.CategoryNameOnly;
 import com.udxp.repository.CategoryRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -32,6 +34,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
+    @CacheEvict(value = "categories", key = "#id")
     public CategoryResponse updateCategory(int id, CategoryCreateRequest request) {
         Category category = categoryRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Category not found"));
@@ -40,11 +43,13 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
+    @CacheEvict(value = "categories", key = "#categoryName")
     public void deleteCategory(String categoryName) {
         categoryRepository.deleteAll();
     }
 
     @Override
+    @Cacheable(value = "categories", key = "#pageable")
     public Page<String> getCategoryNames(Pageable pageable) {
         Pageable sortedPageable = PageRequest.of(
                 pageable.getPageNumber(),

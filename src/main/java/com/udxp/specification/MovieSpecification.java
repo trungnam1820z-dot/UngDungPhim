@@ -14,7 +14,7 @@ public class MovieSpecification {
     public static Specification<Movie> hasReleaseDate(Integer releaseDate) {
         return (root, query, cb) ->
                 releaseDate == null ? null :
-                        cb.equal(root.get("year"), releaseDate);
+                        cb.equal(root.get("releaseDate"), releaseDate);
     }
     public static Specification<Movie> hasDirectorName(String directorName) {
         return (root, query, cb) -> {

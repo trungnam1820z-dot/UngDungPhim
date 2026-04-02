@@ -2,21 +2,17 @@ package com.udxp.service;
 
 import com.udxp.dto.request.MovieCreateRequest;
 import com.udxp.dto.response.MovieResponse;
-import com.udxp.entities.Category;
-import com.udxp.entities.Country;
-import com.udxp.entities.Director;
-import com.udxp.entities.Movie;
+import com.udxp.entities.*;
 import com.udxp.mapper.MovieMapper;
-import com.udxp.repository.CategoryRepository;
-import com.udxp.repository.CountryRepository;
-import com.udxp.repository.DirectorRepository;
-import com.udxp.repository.MovieRepository;
+import com.udxp.repository.*;
 import com.udxp.specification.MovieFilter;
 import com.udxp.specification.MovieSpecification;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -35,6 +31,7 @@ public class MovieServiceImpl implements MovieService {
     private final CountryRepository countryRepository;
     private final DirectorRepository directorRepository;
     private final CategoryRepository categoryRepository;
+    private final MovieSearchRepository movieSearchRepository;
     @Override
     public MovieResponse createMovie(MovieCreateRequest request) {
         if (movieRepository.existsMovieByTitle(request.getTitle())){
@@ -59,11 +56,13 @@ public class MovieServiceImpl implements MovieService {
         Movie saved = movieRepository.save(movie);
         return movieMapper.toResponse(saved);
     }
-
+    @Override
+    @Cacheable(value = "movies", key = "#id")
     public MovieResponse getMovieById(int id) {
         return movieMapper.toResponse(movieRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Movie with id " + id + " not found")));
     }
     @Override
+    @Cacheable(value = "movies")
     public Page<MovieResponse> searchMovie(MovieFilter filter, Pageable pageable) {
         Specification<Movie> spec = Specification
                 .where(MovieSpecification.hasTitle(filter.getTitle()))
@@ -79,7 +78,9 @@ public class MovieServiceImpl implements MovieService {
         Page<Movie> moviePage = movieRepository.findAll(spec, sortedPageable);
         return moviePage.map(movieMapper::toResponse);
     }
+
     @Override
+    @CacheEvict(value = "movies", key = "#id")
     public MovieResponse updateMovie(int id, MovieCreateRequest request) {
         Movie movie = movieRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Movie not found"));
@@ -88,8 +89,13 @@ public class MovieServiceImpl implements MovieService {
         return movieMapper.toResponse(movieRepository.save(movie));
     }
     @Override
+    @CacheEvict(value = "movies", key = "#id")
     public void deleteMovie(int id) {
         movieRepository.deleteById(id);
         log.info("Movie with id: {} was deleted", id);
+    }
+    @Override
+    public List<MovieDocument> searchAdvanced(String keyword, Integer releaseDate, String category) {
+        return movieSearchRepository.searchAdvanced(keyword, releaseDate, category);
     }
 }

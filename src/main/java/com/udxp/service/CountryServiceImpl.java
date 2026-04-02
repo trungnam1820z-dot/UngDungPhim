@@ -8,6 +8,8 @@ import com.udxp.repository.CountryNameOnly;
 import com.udxp.repository.CountryRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -32,6 +34,7 @@ public class CountryServiceImpl implements CountryService {
     }
 
     @Override
+    @CacheEvict(value = "countries", key = "#id")
     public CountryResponse updateCountry(int id, CountryCreateRequest request) {
         Country country = countryRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Country not found"));
@@ -39,10 +42,12 @@ public class CountryServiceImpl implements CountryService {
         return countryMapper.toResponse(countryRepository.save(country));
     }
     @Override
+    @CacheEvict(value = "countries", key = "#id")
     public void deleteCountry(String countryName) {
         countryRepository.deleteByCountryName(countryName);
     }
     @Override
+    @Cacheable(value = "directors", key = "#pageable")
     public Page<String> getCountryNames(Pageable pageable) {
         Pageable sortedPageable = PageRequest.of(
                 pageable.getPageNumber(),

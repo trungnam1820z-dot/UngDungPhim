@@ -5,12 +5,13 @@ import com.udxp.dto.response.DirectorResponse;
 import com.udxp.entities.Country;
 import com.udxp.entities.Director;
 import com.udxp.mapper.DirectorMapper;
-import com.udxp.repository.CountryNameOnly;
 import com.udxp.repository.CountryRepository;
 import com.udxp.repository.DirectorNameOnly;
 import com.udxp.repository.DirectorRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -26,10 +27,6 @@ public class DirectorServiceImpl implements DirectorService{
     private final CountryRepository countryRepository;
     @Override
     public DirectorResponse createDirector(DirectorCreateRequest request) {
-        if(directorRepository.existsByDirectorName(request.getDirectorName())){
-            log.error("Director already exists");
-            throw new RuntimeException("Director already exists");
-        }
         Director director = directorMapper.toDirectorEntity(request);
         Country country = countryRepository.findById(request.getCountryId())
                 .orElseThrow(() -> new RuntimeException("Country not found"));
@@ -39,6 +36,7 @@ public class DirectorServiceImpl implements DirectorService{
     }
 
     @Override
+    @CacheEvict(value = "directors", key = "#id")
     public DirectorResponse updateDirector(int id, DirectorCreateRequest request) {
         Director director = directorRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Director not found"));
@@ -47,11 +45,13 @@ public class DirectorServiceImpl implements DirectorService{
     }
 
     @Override
+    @CacheEvict(value = "directors", key = "#id")
     public void deleteDirector(int id) {
         directorRepository.deleteById(id);
     }
 
     @Override
+    @Cacheable(value = "directors", key = "#pageable")
     public Page<String> getDirector(Pageable pageable) {
         Pageable sortedPageable = PageRequest.of(
                 pageable.getPageNumber(),
