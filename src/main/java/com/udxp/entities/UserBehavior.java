@@ -1,28 +1,25 @@
 package com.udxp.entities;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-import java.util.List;
-
 @Entity
-@Table(name = "country")
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class Country {
+public class UserBehavior {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
-    String countryCode;
-    String countryName;
-    @OneToMany(mappedBy = "country")
-    List<Movie> movies;
-
-    @OneToMany(mappedBy = "country")
-    List<Director> directors;
+    Long userId;
+    Long movieId;
+    Long behaviorId;
+    String action;
 }

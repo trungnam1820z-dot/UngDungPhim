@@ -28,7 +28,7 @@ public class DirectorServiceImpl implements DirectorService{
     @Override
     public DirectorResponse createDirector(DirectorCreateRequest request) {
         Director director = directorMapper.toDirectorEntity(request);
-        Country country = countryRepository.findById(request.getCountryId())
+        Country country = countryRepository.findById((long) Math.toIntExact(request.getCountryId()))
                 .orElseThrow(() -> new RuntimeException("Country not found"));
         director.setCountry(country);
         Director director1 = directorRepository.save(director);
@@ -37,7 +37,7 @@ public class DirectorServiceImpl implements DirectorService{
 
     @Override
     @CacheEvict(value = "directors", key = "#id")
-    public DirectorResponse updateDirector(int id, DirectorCreateRequest request) {
+    public DirectorResponse updateDirector(Long id, DirectorCreateRequest request) {
         Director director = directorRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Director not found"));
         directorMapper.updateDirector(request, director);
@@ -46,7 +46,7 @@ public class DirectorServiceImpl implements DirectorService{
 
     @Override
     @CacheEvict(value = "directors", key = "#id")
-    public void deleteDirector(int id) {
+    public void deleteDirector(Long id) {
         directorRepository.deleteById(id);
     }
 

@@ -23,11 +23,11 @@ public class DirectorController {
         return directorService.getDirector(pageable);
     }
     @PutMapping("/{id}")
-    public DirectorResponse updateDirector(@PathVariable int id, @RequestBody DirectorCreateRequest request) {
+    public DirectorResponse updateDirector(@PathVariable Long id, @RequestBody DirectorCreateRequest request) {
         return directorService.updateDirector(id,request);
     }
     @DeleteMapping("/{id}")
-    public void deleteDirector(@PathVariable int id) {
+    public void deleteDirector(@PathVariable Long id) {
         directorService.deleteDirector(id);
     }
 }

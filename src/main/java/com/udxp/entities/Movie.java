@@ -17,11 +17,11 @@ import java.util.List;
 public class Movie {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int id;
+    Long id;
     String title;
     String description;
     Integer releaseDate;
-    int duration;
+    Long duration;
     //Many movie - 1 country
     @ManyToOne
     @JoinColumn(name = "country_id")

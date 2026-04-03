@@ -15,9 +15,9 @@ public class MovieCreateRequest {
     @NotBlank(message = "Tên phim không được để trống")
     String title;
     String description;
-    Integer releaseDate;
-    int duration;
-    int countryId;
-    List<Integer> directorIds;
-    List<Integer> categoryIds;
+    Long releaseDate;
+    Long duration;
+    Long countryId;
+    List<Long> directorIds;
+    List<Long> categoryIds;
 }

@@ -17,12 +17,10 @@ import java.time.LocalDate;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int Id;
+    Long Id;
     String userName;
     String password;
     String fullName;
-    String Email;
-    String Gender;
-    LocalDate createAt;
-    String role;
+    String email;
+    String gender;
 }

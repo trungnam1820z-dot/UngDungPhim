@@ -15,7 +15,7 @@ public class MovieResponse  implements Serializable {
     String title;
     String description;
     Integer releaseDate;
-    int duration;
+    Long duration;
     List<String> directorName;
     List<String> categoryName;
     String countryName;

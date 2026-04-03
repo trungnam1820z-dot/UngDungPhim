@@ -22,7 +22,7 @@ public class CategoryController {
         return categoryService.getCategoryNames(pageable);
     }
     @PutMapping("/{id}")
-    public CategoryResponse updateCategory(@PathVariable int id, @RequestBody CategoryCreateRequest request) {
+    public CategoryResponse updateCategory(@PathVariable Long id, @RequestBody CategoryCreateRequest request) {
         return categoryService.updateCategory(id,request);
     }
     @DeleteMapping("/{categoryName}")

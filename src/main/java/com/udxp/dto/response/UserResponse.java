@@ -3,8 +3,6 @@ package com.udxp.dto.response;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-import java.time.LocalDate;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -13,8 +11,7 @@ import java.time.LocalDate;
 public class UserResponse {
     String userName;
     String fullName;
-    String Email;
-    String Gender;
+    String email;
+    String gender;
     String role;
-    LocalDate createAt;
 }

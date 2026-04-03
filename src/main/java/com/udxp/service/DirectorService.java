@@ -7,7 +7,7 @@ import org.springframework.data.domain.Pageable;
 
 public interface DirectorService {
     DirectorResponse createDirector(DirectorCreateRequest request);
-    DirectorResponse updateDirector(int id, DirectorCreateRequest request);
-    void deleteDirector(int id);
+    DirectorResponse updateDirector(Long id, DirectorCreateRequest request);
+    void deleteDirector(Long id);
     Page<String> getDirector(Pageable pageable);
 }

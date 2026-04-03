@@ -12,7 +12,7 @@ import java.util.List;
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class CategoryResponse {
-    int id;
+    Long id;
     String categoryName;
     String description;
     List<MovieResponse> movies;

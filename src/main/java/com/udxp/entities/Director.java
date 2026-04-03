@@ -17,7 +17,7 @@ import java.util.List;
 public class Director {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int Id;
+    Long Id;
     String directorName;
     // Many director - 1 country
     @ManyToOne

@@ -11,7 +11,7 @@ import java.util.List;
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class CountryResponse {
-    int id;
+    Long id;
     private String countryCode;
     String countryName;
     List<MovieResponse> movies;

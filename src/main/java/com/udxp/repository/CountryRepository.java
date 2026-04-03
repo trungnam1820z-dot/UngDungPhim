@@ -6,9 +6,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
-public interface CountryRepository extends JpaRepository<Country, Integer> {
+public interface CountryRepository extends JpaRepository<Country, Long> {
     Page<CountryNameOnly> findAllBy(Pageable pageable);
-    boolean existsByCountryName(String countryName);
-    void deleteByCountryName(String countryName);
+    Optional<Country> findByCountryName(String countryStr);
 }

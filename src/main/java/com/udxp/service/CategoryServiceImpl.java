@@ -35,7 +35,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     @CacheEvict(value = "categories", key = "#id")
-    public CategoryResponse updateCategory(int id, CategoryCreateRequest request) {
+    public CategoryResponse updateCategory(Long id, CategoryCreateRequest request) {
         Category category = categoryRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Category not found"));
         categoryMapper.updateCategory(category, request);
