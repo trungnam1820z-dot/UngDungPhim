@@ -1,10 +1,10 @@
 package com.udxp.mapper;
 
-import com.udxp.dto.request.MovieCreateRequest;
-import com.udxp.dto.response.MovieResponse;
-import com.udxp.entities.Category;
-import com.udxp.entities.Director;
-import com.udxp.entities.Movie;
+import com.udxp.movie.dto.request.MovieCreateRequest;
+import com.udxp.movie.dto.response.MovieResponse;
+import com.udxp.metadata.category.Category;
+import com.udxp.metadata.director.Director;
+import com.udxp.movie.entities.Movie;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;

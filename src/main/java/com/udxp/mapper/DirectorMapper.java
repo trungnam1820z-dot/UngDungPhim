@@ -1,8 +1,8 @@
 package com.udxp.mapper;
 
-import com.udxp.dto.request.DirectorCreateRequest;
-import com.udxp.dto.response.DirectorResponse;
-import com.udxp.entities.Director;
+import com.udxp.metadata.director.DirectorCreateRequest;
+import com.udxp.metadata.director.DirectorResponse;
+import com.udxp.metadata.director.Director;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;

@@ -1,8 +1,8 @@
 package com.udxp.mapper;
 
-import com.udxp.dto.request.CategoryCreateRequest;
-import com.udxp.dto.response.CategoryResponse;
-import com.udxp.entities.Category;
+import com.udxp.metadata.category.CategoryCreateRequest;
+import com.udxp.metadata.category.CategoryResponse;
+import com.udxp.metadata.category.Category;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;

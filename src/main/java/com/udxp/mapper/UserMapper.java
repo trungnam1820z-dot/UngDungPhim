@@ -1,8 +1,8 @@
 package com.udxp.mapper;
 
-import com.udxp.dto.request.UserCreateRequest;
-import com.udxp.dto.response.UserResponse;
-import com.udxp.entities.User;
+import com.udxp.user.dto.request.UserCreateRequest;
+import com.udxp.user.dto.response.UserResponse;
+import com.udxp.user.entities.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 
