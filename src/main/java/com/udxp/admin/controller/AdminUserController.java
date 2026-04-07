@@ -25,6 +25,7 @@ public class AdminUserController {
     public void updateRole(@PathVariable Long id, @RequestParam Role role) {
         adminService.updateRole(id, role);
     }
+
     @GetMapping("/{id}")
     public UserResponse getById(@PathVariable Long id){
         return userService.getById(id);

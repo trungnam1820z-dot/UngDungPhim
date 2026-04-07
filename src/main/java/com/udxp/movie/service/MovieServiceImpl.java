@@ -1,11 +1,11 @@
 package com.udxp.movie.service;
 
-import com.udxp.metadata.category.Category;
-import com.udxp.metadata.category.CategoryRepository;
-import com.udxp.metadata.country.Country;
-import com.udxp.metadata.country.CountryRepository;
-import com.udxp.metadata.director.Director;
-import com.udxp.metadata.director.DirectorRepository;
+import com.udxp.masterdata.category.entities.Category;
+import com.udxp.masterdata.category.repository.CategoryRepository;
+import com.udxp.masterdata.country.entities.Country;
+import com.udxp.masterdata.country.repository.CountryRepository;
+import com.udxp.masterdata.director.entities.Director;
+import com.udxp.masterdata.director.repository.DirectorRepository;
 import com.udxp.movie.dto.request.MovieCreateRequest;
 import com.udxp.movie.dto.response.MovieResponse;
 import com.udxp.mapper.MovieMapper;
@@ -33,6 +33,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -58,6 +59,8 @@ public class MovieServiceImpl implements MovieService {
     private final CategoryRepository categoryRepository;
     private final MovieSearchRepository movieSearchRepository;
     private static final int BATCH_SIZE = 100;
+
+    @PreAuthorize("hasAuthority('ADMIN')")
     @Override
     public MovieResponse create(MovieCreateRequest request) {
         if (movieRepository.existsMovieByTitle(request.getTitle())){
@@ -83,6 +86,7 @@ public class MovieServiceImpl implements MovieService {
         return movieMapper.toResponse(saved);
     }
 
+
     @Override
     @Cacheable(value = "movies", key = "#id")
     public MovieResponse getById(Long id) {
@@ -105,6 +109,7 @@ public class MovieServiceImpl implements MovieService {
         return moviePage.map(movieMapper::toResponse);
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @Override
     @CacheEvict(value = "movies", key = "#id")
     public MovieResponse update(Long id, MovieCreateRequest request) {
@@ -114,6 +119,7 @@ public class MovieServiceImpl implements MovieService {
         log.info("Movie with id: {} has been updated", id);
         return movieMapper.toResponse(movieRepository.save(movie));
     }
+    @PreAuthorize("hasAuthority('ADMIN')")
     @Override
     @CacheEvict(value = "movies", key = "#id")
     public void delete(Long id) {
@@ -124,6 +130,7 @@ public class MovieServiceImpl implements MovieService {
     public List<MovieDocument> searchAdvanced(String keyword, Integer releaseDate, String category) {
         return movieSearchRepository.searchAdvanced(keyword, releaseDate, category);
     }
+    @PreAuthorize("hasAuthority('ADMIN')")
     @Override
     @Transactional(readOnly = true)
     public void exportToExcel(OutputStream outputStream) throws IOException {
@@ -187,7 +194,7 @@ public class MovieServiceImpl implements MovieService {
             workbook.dispose();
         }
     }
-
+    @PreAuthorize("hasAuthority('ADMIN')")
     @Override
     public void importFromExcel(MultipartFile file) throws IOException {
         try (Workbook workbook = new XSSFWorkbook(file.getInputStream())) {

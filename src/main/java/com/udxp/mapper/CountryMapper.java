@@ -1,8 +1,8 @@
 package com.udxp.mapper;
 
-import com.udxp.metadata.country.CountryCreateRequest;
-import com.udxp.metadata.country.CountryResponse;
-import com.udxp.metadata.country.Country;
+import com.udxp.masterdata.country.dto.request.CountryCreateRequest;
+import com.udxp.masterdata.country.dto.response.CountryResponse;
+import com.udxp.masterdata.country.entities.Country;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;

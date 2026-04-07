@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -18,6 +19,7 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
 
+    @PreAuthorize("hasAnyAuthority('ADMIN','USER')")
     @Override
     public UserResponse create(UserCreateRequest request) {
         if(userRepository.existsUsersByUserName(request.getUserName())){
@@ -27,7 +29,7 @@ public class UserServiceImpl implements UserService {
         User user = userMapper.toUserEntity(request);
         return userMapper.toUserResponse(userRepository.save(user));
     }
-
+    @PreAuthorize("hasAnyAuthority('ADMIN','USER')")
     @Override
     @CacheEvict(value = "users", key = "#id")
     public UserResponse updateById(Long id, UserCreateRequest request) {
@@ -36,7 +38,7 @@ public class UserServiceImpl implements UserService {
         userMapper.updateUser(user, request);
         return userMapper.toUserResponse(userRepository.save(user));
     }
-
+    @PreAuthorize("hasAnyAuthority('ADMIN','USER')")
     @Override
     @Cacheable(value = "users", key = "#id")
     public UserResponse getById(Long id) {

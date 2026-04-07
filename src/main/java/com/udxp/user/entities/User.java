@@ -22,6 +22,5 @@ public class User {
     String fullName;
     String email;
     String gender;
-    @Enumerated(EnumType.STRING)
     Role role;
 }

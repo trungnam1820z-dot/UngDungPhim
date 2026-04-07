@@ -14,7 +14,6 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtGra
 import org.springframework.security.web.SecurityFilterChain;
 
 import javax.crypto.spec.SecretKeySpec;
-import java.nio.charset.StandardCharsets;
 
 @Configuration
 @EnableKafka
@@ -32,9 +31,13 @@ public class AppConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((request -> request
-                        .requestMatchers("api/admin/**").hasRole("ADMIN")
-                        .requestMatchers("/api/user/**").hasAnyRole("USER", "ADMIN")
-                        .anyRequest().permitAll()));
+                                // public
+                                .requestMatchers("/auth/**").permitAll()
+                                // admin
+                                .requestMatchers("/api/admin/**").hasAuthority("ADMIN")
+                                // user + admin
+                                .requestMatchers("/api/user/**").hasAnyAuthority("USER", "ADMIN")
+                                .anyRequest().authenticated()));
         http.oauth2ResourceServer(oauth2 -> oauth2.jwt(jwt -> {
             jwt.jwtAuthenticationConverter(jwtAuthenticationConverter());
         }));
@@ -56,9 +59,8 @@ public class AppConfig {
     public JwtDecoder jwtDecoder() {
         return NimbusJwtDecoder
                 .withSecretKey(new SecretKeySpec(
-                        secretKey.getBytes(StandardCharsets.UTF_8),
-                        "HmacSHA512")
-                )
+                        secretKey.getBytes(),
+                        "HmacSHA256"))
                 .build();
     }
 }

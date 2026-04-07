@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class KafkaBehaviorConsumer {
-    private BehaviorRepository behaviorRepository;
+    private final BehaviorRepository behaviorRepository;
     @KafkaListener(topics = "user-behavior", groupId = "behavior-group")
     public void consume(UserBehavior behavior) {
         UserBehavior userBehavior = new UserBehavior();

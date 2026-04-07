@@ -1,8 +1,8 @@
 package com.udxp.movie.entities;
 
-import com.udxp.metadata.category.Category;
-import com.udxp.metadata.country.Country;
-import com.udxp.metadata.director.Director;
+import com.udxp.masterdata.category.entities.Category;
+import com.udxp.masterdata.country.entities.Country;
+import com.udxp.masterdata.director.entities.Director;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
